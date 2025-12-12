@@ -84,7 +84,7 @@ cat("=== CREATING VISUALIZATIONS ===\n\n")
 
 sex_colors <- ifelse(data_clean$sex == "F", "red", "blue")
 
-png(filename = "scatter_walc vs Final grade.png")
+
 plot(data_clean$Weekend_Alcohol, data_clean$Final_Grade,
      col = adjustcolor(sex_colors, alpha.f = 0.7),
      pch = 19,
@@ -95,13 +95,12 @@ legend("topright",
        legend = c("Female", "Male"),
        col = c("red", "blue"),
        pch = 19)
-dev.off()
+
 
 # Histogram plot of Weekday Alcohol.
 
 par(mfrow = c(1, 2))
 
-png(filename = "hist.png")
 hist(data_clean$Weekday_Alcohol,
      main = "Distribution of Weekday Alcohol Consumption",
      xlab = "Dalc Level",
@@ -119,17 +118,15 @@ hist(data_clean$Weekend_Alcohol,
      col = "lightblue",
      border = "black",
      breaks = seq(0.5, 5.5, by = 1))
-dev.off()
 par(mfrow = c(1, 1))
 
 
 # distribution of final grade(g3) histogram plot.
-png(filename = "hist_density.png")
 hist(data$G3,breaks = 10,col = "blue",main = "Distribution of Final Grades(G3)", xlab = "Final Grade", ylab = "Count",freq = TRUE, border = "Black")
 dens<-density(data$G3)
 scaled_y <- dens$y * diff(hist(data$G3, plot = FALSE)$breaks[1:2]) * length(data$G3)
 lines(dens$x, scaled_y, lwd = 2)
-dev.off()
+
 
 
 #Box plot for final grade by study time.
@@ -197,6 +194,7 @@ par(mfrow = c(1, 1))
 failures_by_school <- tapply(data_clean$failures, data_clean$school, sum)
 failures_by_school
 # Pie chart for total failures by school
+par(mfrow = c(1, 2))
 pie(failures_by_school,
     labels = paste(names(failures_by_school),
                    "(", failures_by_school, "failures)", sep=""),
@@ -210,7 +208,7 @@ pie(zero_fail,
     labels = paste(names(zero_fail), " (", zero_fail, " zero failures)", sep=""),
     main = "Students With Zero Failures by School",
     col = c("pink","skyblue"))
-
+par(mfrow = c(1, 1))
 
 
 # Combined Scatter plot Comparing Dalc & Walc Together
@@ -305,3 +303,4 @@ summary_df <- data.frame(
 )
 
 print(summary_df)
+
